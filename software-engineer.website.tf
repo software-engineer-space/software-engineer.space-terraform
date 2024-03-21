@@ -18,6 +18,11 @@ resource "github_repository" "software-engineer-space" {
   }
 }
 
+resource "github_repository_collaborator" "software-engineer-space" {
+  repository = github_repository.software-engineer-space.name
+  username   = "tpreviero"
+}
+
 resource "github_repository_file" "index" {
   repository          = github_repository.software-engineer-space.name
   branch              = "main"
