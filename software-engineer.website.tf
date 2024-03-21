@@ -7,20 +7,17 @@ resource "cloudflare_record" "software-engineer-space" {
   proxied = true
 }
 
-
 resource "github_repository" "software-engineer-space" {
-  name             = "software-engineer-space.github.io"
+  name             = "software-engineer.space"
   license_template = "gpl-3.0"
   auto_init        = true
 
-  lifecycle {
-    ignore_changes = [pages]
+  pages {
+    cname = var.software-engineer-space-dns
+    source {
+      branch = "main"
+    }
   }
-}
-
-resource "github_repository_collaborator" "software-engineer-space" {
-  repository = github_repository.software-engineer-space.name
-  username   = "tpreviero"
 }
 
 resource "github_repository_file" "index" {
@@ -29,16 +26,4 @@ resource "github_repository_file" "index" {
   file                = "index.html"
   content             = "Hello software-engineer 👋"
   commit_message      = "Add index.html"
-  commit_author       = var.software-engineer-space-user.name
-  commit_email        = var.software-engineer-space-user.email
-}
-
-resource "github_repository_file" "CNAME" {
-  repository          = github_repository.software-engineer-space.name
-  branch              = "main"
-  file                = "CNAME"
-  content             = var.software-engineer-space-dns
-  commit_message      = "Add CNAME"
-  commit_author       = var.software-engineer-space-user.name
-  commit_email        = var.software-engineer-space-user.email
 }
