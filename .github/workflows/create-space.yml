@@ -19,10 +19,10 @@ jobs:
     - name: Create file for space
       run : |
         cat > ${{ github.actor }}.software-engineer.space.tf << EOF
-        module "${{ dns_prefix }}" {
+        module "${{ inputs.dns_prefix }}" {
           source             = "./modules/software-engineer-space"
           github_handle      = "${{ github.actor }}"
-          domain_prefix      = "${{ dns_prefix }}"
+          domain_prefix      = "${{ inputs.dns_prefix }}"
           cloudflare_zone_id = cloudflare_zone.software-engineer-space.id
         
           providers = {
@@ -36,7 +36,7 @@ jobs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add ${{ github.actor }}.software-engineer.space.tf
-        git commit -am "Add space for ${{ github.actor }} as ${{ dns_prefix }}.software-engineer.space.tf"
+        git commit -am "Add space for ${{ github.actor }} as ${{ inputs.dns_prefix }}.software-engineer.space.tf"
         git push
     - name: Run terraform
       run: |
