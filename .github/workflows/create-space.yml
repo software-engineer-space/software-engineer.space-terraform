@@ -12,6 +12,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+    - name: Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.4.7"
     - name: Create file for space
       run : |
         cat > ${{ github.actor }}.software-engineer.space.tf << EOF
@@ -35,9 +39,6 @@ jobs:
         git commit -am "Add space for ${{ github.actor }} as ${{ dns_prefix }}.software-engineer.space.tf"
         git push
     - name: Run terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: "1.4.7"
       run: |
         terraform init
         terraform apply -auto-approve
