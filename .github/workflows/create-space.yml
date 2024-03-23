@@ -1,0 +1,44 @@
+name: create-space
+on:
+  workflow_dispatch:
+    inputs:
+      dns_prefix:
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Create file for space
+      run : |
+        cat > ${{ github.actor }}.software-engineer.space.tf << EOF
+        module "${{ dns_prefix }}" {
+          source             = "./modules/software-engineer-space"
+          github_handle      = "${{ github.actor }}"
+          domain_prefix      = "${{ dns_prefix }}"
+          cloudflare_zone_id = cloudflare_zone.software-engineer-space.id
+        
+          providers = {
+            cloudflare = cloudflare
+            github = github
+          }
+        }
+        EOF
+    - name: Commit the new file for space
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add ${{ github.actor }}.software-engineer.space.tf
+        git commit -am "Add space for ${{ github.actor }} as ${{ dns_prefix }}.software-engineer.space.tf"
+        git push
+    - name: Run terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.4.7"
+      run: |
+        terraform init
+        terraform apply -auto-approve
+        terraform apply -auto-approve
