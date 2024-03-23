@@ -7,7 +7,7 @@ on:
         type: string
 
 jobs:
-  test:
+  create-space:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
