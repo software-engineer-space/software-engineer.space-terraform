@@ -11,6 +11,7 @@ resource "github_repository" "software-engineer-space" {
 }
 
 resource "github_repository_collaborator" "software-engineer-space" {
+  count = var.github_handle != "" ? 1 : 0
   repository = github_repository.software-engineer-space.name
   username   = var.github_handle
 }

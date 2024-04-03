@@ -1,5 +1,6 @@
 variable "github_handle" {
   type = string
+  default = ""
 }
 
 variable "domain_prefix" {
