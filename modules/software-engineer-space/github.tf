@@ -22,4 +22,7 @@ resource "github_repository_file" "index" {
   file           = "index.html"
   content        = "Hello software-engineer ${var.github_handle} 👋"
   commit_message = "Add index.html"
+  lifecycle {
+    ignore_changes = all
+  }
 }

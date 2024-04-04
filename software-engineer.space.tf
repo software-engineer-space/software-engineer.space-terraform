@@ -19,11 +19,3 @@ resource "github_repository" "software-engineer-space" {
     }
   }
 }
-
-resource "github_repository_file" "index" {
-  repository          = github_repository.software-engineer-space.name
-  branch              = "main"
-  file                = "index.html"
-  content             = "Hello software-engineer 👋"
-  commit_message      = "Add index.html"
-}
