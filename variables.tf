@@ -13,11 +13,11 @@ variable "software-engineer-space-user" {
   type = map(string)
   default = {
     name  = "Software Engineer"
-    email  = "info@software-engineer.space"
+    email = "info@software-engineer.space"
   }
 }
 
 variable "software-engineer-space-dns" {
-  type = string
+  type    = string
   default = "software-engineer.space"
 }
